@@ -1,0 +1,3 @@
+rootProject.name = 'FabledLands4Android'
+
+include ':app'

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdventurersFileParser implements AbstractFileParser {
+public class AdventurersFileParser implements FileParser {
     public Integer getAmount(XmlPullParser parser) {
         String value = parser.getAttributeValue(null, "amount");
         return Integer.parseInt(value);

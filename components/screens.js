@@ -10,7 +10,7 @@ import {
 } from './styles';
 
 import {
-  getBook
+  getCharacterCreationInfo
 } from './books';
 
 export class CharacterCreationScreen extends Component {
@@ -21,12 +21,10 @@ export class CharacterCreationScreen extends Component {
       adventurers: [],
     };
 
-    getBook(1)
-      .then(book => book1.getAdventurersInfo())
-      .then(info => info.getPrebuildAdventurers())
-      .then(adventurers => {
+    getCharacterCreationInfo(1)
+      .then(info => {
         this.setState({
-          adventurers: adventurers
+          info: info
         });
       });
   }
@@ -54,10 +52,7 @@ export class CharacterCreationScreen extends Component {
         <Text style={styles.header}>
           Create a character
         </Text>
-        <ListView
-          dataSource={this.createDataSource()}
-          renderRow={this.renderCharacter.bind(this)}
-        />
+        <Text>Initial gold: {this.initialGold}</Text>
         <Text onPress={this.goToHomeScreen.bind(this)}>
           Back
         </Text>

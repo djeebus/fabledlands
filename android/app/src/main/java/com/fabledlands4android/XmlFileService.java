@@ -1,7 +1,8 @@
 package com.fabledlands4android;
 
 import android.content.res.AssetManager;
-import com.fabledlands4android.parsers.AbstractFileParser;
+import android.util.Log;
+import com.fabledlands4android.parsers.FileParser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -11,6 +12,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 class XmlFileService {
+    private static String TAG = "XmlFileService";
+
     private HashMap<String, Object> _cache = new HashMap<>();
 
     private XmlPullParserFactory factory;
@@ -23,12 +26,14 @@ class XmlFileService {
 
     public <T> T get(
             String filename,
-            AbstractFileParser fileParser
+            FileParser fileParser
     ) {
         if (this._cache.containsKey(filename)) {
+            Log.i(TAG, "returning cached version of " + filename);
             return (T)this._cache.get(filename);
         }
 
+        Log.i(TAG, "Reading " + filename);
         InputStream inputStream = null;
         try {
             inputStream = this.assets.open(filename);
@@ -37,16 +42,18 @@ class XmlFileService {
             return null;
         }
 
+        Log.i(TAG, "Parsing " + filename);
         XmlPullParser parser = null;
         try {
             parser = this.factory.newPullParser();
             parser.setInput(inputStream, null);
-            return (T)fileParser.parse(parser);
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            Log.i(TAG, "Deserializing " + filename);
+            Object result = fileParser.parse(parser);
+            Log.i(TAG, "Successfully deserialized " + filename);
+            return (T)result;
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to deserialize " + filename, e);
             return null;
         }
     }

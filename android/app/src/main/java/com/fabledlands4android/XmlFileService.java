@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-class XmlFileService {
+public class XmlFileService {
     private static String TAG = "XmlFileService";
 
     private HashMap<String, Object> _cache = new HashMap<>();
@@ -27,7 +27,7 @@ class XmlFileService {
     public <T> T get(
             String filename,
             FileParser fileParser
-    ) {
+    ) throws XmlPullParserException, IOException {
         if (this._cache.containsKey(filename)) {
             Log.i(TAG, "returning cached version of " + filename);
             return (T)this._cache.get(filename);
@@ -43,18 +43,12 @@ class XmlFileService {
         }
 
         Log.i(TAG, "Parsing " + filename);
-        XmlPullParser parser = null;
-        try {
-            parser = this.factory.newPullParser();
-            parser.setInput(inputStream, null);
+        XmlPullParser parser = this.factory.newPullParser();
+        parser.setInput(inputStream, null);
 
-            Log.i(TAG, "Deserializing " + filename);
-            Object result = fileParser.parse(parser);
-            Log.i(TAG, "Successfully deserialized " + filename);
-            return (T)result;
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to deserialize " + filename, e);
-            return null;
-        }
+        Log.i(TAG, "Deserializing " + filename);
+        Object result = fileParser.parse(parser);
+        Log.i(TAG, "Successfully deserialized " + filename);
+        return (T)result;
     }
 }

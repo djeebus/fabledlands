@@ -1,5 +1,7 @@
 package com.fabledlands4android.parsers;
 
+import android.util.Log;
+
 import com.fabledlands4android.*;
 import com.fabledlands4android.items.InventoryItem;
 import org.xmlpull.v1.XmlPullParser;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdventurersFileParser implements FileParser {
-    Integer getAmount(XmlPullParser parser) {
+    int getAmount(XmlPullParser parser) {
         String value = parser.getAttributeValue(null, "amount");
         return Integer.parseInt(value);
     }
@@ -66,28 +68,37 @@ public class AdventurersFileParser implements FileParser {
         }
     }
 
-    ArrayList<InventoryItem> parseItems(XmlPullParser parser, HashMap<String, Profession> professions)
+    void parseItems(XmlPullParser parser, HashMap<String, Profession> professions)
             throws IOException, XmlPullParserException
     {
-        ArrayList<InventoryItem> items = new ArrayList<>();
         while (true) {
             switch (parser.next()) {
                 case XmlPullParser.START_TAG:
-                    items.add(ItemParser.parse(parser));
+                    String professionName = parser.getAttributeValue(null, "profession");
+                    InventoryItem item = ItemParser.parse(parser);
+
+                    if (professionName == null) {
+                        for (Profession profession : professions.values()) {
+                            profession.addInitialItem(item);
+                        }
+                    } else {
+                        Profession profession = professions.get(professionName);
+                        profession.addInitialItem(item);
+                    }
                     break;
 
                 case XmlPullParser.END_TAG:
-                    switch (parser.getName()) {
-                        case "items":
-                            return items;
-                    }
+                    if (parser.getName().equals("items"))
+                        return;
+                    Log.d("TESTING", "tag: " + parser.getName());
+                    break;
             }
         }
     }
 
-    ArrayList<Adventurer> parsePrebuildAdventurers(
+    ArrayList<Adventurer> parsePrebuiltAdventurers(
             XmlPullParser parser, HashMap<String, Profession> professions,
-            Integer initialStamina, Integer initialRank, Integer initialGold
+            int initialStamina, int initialRank, int initialGold
     )
             throws IOException, XmlPullParserException
     {
@@ -130,9 +141,9 @@ public class AdventurersFileParser implements FileParser {
             throws XmlPullParserException, IOException {
         ArrayList<Adventurer> prebuiltAdventurers = new ArrayList<>();
         HashMap<String, Profession> professions = new HashMap<>();
-        Integer initialStamina = 0,
-                initialRank = 0,
-                initialGold = 0;
+        int initialStamina = 0,
+            initialRank = 0,
+            initialGold = 0;
         ArrayList<InventoryItem> items = new ArrayList<>();
 
         int eventType;
@@ -145,11 +156,11 @@ public class AdventurersFileParser implements FileParser {
                             break;
 
                         case "items":
-                            items = this.parseItems(parser, professions);
+                            this.parseItems(parser, professions);
                             break;
 
                         case "starting":
-                            prebuiltAdventurers = this.parsePrebuildAdventurers(
+                            prebuiltAdventurers = this.parsePrebuiltAdventurers(
                                     parser, professions,
                                     initialStamina, initialRank, initialGold
                             );
@@ -164,11 +175,13 @@ public class AdventurersFileParser implements FileParser {
                             break;
 
                         case "gold":
-                            initialRank = this.getAmount(parser);
+                            initialGold = this.getAmount(parser);
                             break;
                     }
                     break;
             }
+
+            parser.next();
         }
 
         return new AdventurersFile(

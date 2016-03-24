@@ -9,6 +9,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.IOException;
+
 public class BookModule extends ReactContextBaseJavaModule {
     private static final String TAG = "BookModule";
 
@@ -39,8 +41,7 @@ public class BookModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getCharacterCreationInfo(Integer bookId, Promise promise)
-            throws XmlPullParserException
-    {
+            throws XmlPullParserException, IOException {
         Book book = new Book(bookId, this.getXmlFileService());
         AdventurersFile file = book.getAdventurersInfo();
         promise.resolve(file.toWritable());

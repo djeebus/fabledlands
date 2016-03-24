@@ -55,4 +55,12 @@ public class Adventurer {
         Integer newMod = currentMod + modifier;
         this._statModifiers.put(attribute, newMod);
     }
+
+    public boolean isMale() {
+        return isMale;
+    }
+
+    public Profession getProfession() {
+        return this.profession;
+    }
 }

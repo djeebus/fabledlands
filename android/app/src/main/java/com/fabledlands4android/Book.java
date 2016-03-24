@@ -2,6 +2,9 @@ package com.fabledlands4android;
 
 import com.fabledlands4android.parsers.AdventurersFileParser;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 import java.util.Formatter;
 
 public class Book {
@@ -14,7 +17,7 @@ public class Book {
         this.xmlFileService = xmlFileService;
     }
 
-    public AdventurersFile getAdventurersInfo() {
+    public AdventurersFile getAdventurersInfo() throws IOException, XmlPullParserException {
         String filename = this.formatter.format(
                 "book%s/Adventurers.xml",
                 this.bookId.toString()).toString();

@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Profession {
     private String name;
     private HashMap<AbilityType, Integer> stats = new HashMap<>();
-    private ArrayList<InventoryItem> initialItems = new ArrayList<>();
+    private ArrayList<InventoryItem> initialItems;
 
     public Profession(
             String name,
@@ -16,9 +16,19 @@ public class Profession {
     ) {
         this.name = name;
         this.stats = stats;
+        this.initialItems = new ArrayList<>();
     }
 
     public Integer getStat(AbilityType attribute) {
         return this.stats.get(attribute);
+    }
+    public String getName() {
+        return this.name;
+    }
+    public ArrayList<InventoryItem> getInitialItems() {
+        return this.initialItems;
+    }
+    public void addInitialItem(InventoryItem item) {
+        this.initialItems.add(item);
     }
 }

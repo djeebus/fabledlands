@@ -89,6 +89,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     splits {
         abi {
@@ -125,5 +126,8 @@ dependencies {
     compile "com.facebook.react:react-native:+"  // From node_modules
 
     testCompile 'junit:junit:4.12'
+    testCompile 'com.android.support.test:runner:0.4.1'
+
     androidTestCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
 }

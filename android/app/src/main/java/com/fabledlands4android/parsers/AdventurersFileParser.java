@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdventurersFileParser implements FileParser {
-    public Integer getAmount(XmlPullParser parser) {
+    Integer getAmount(XmlPullParser parser) {
         String value = parser.getAttributeValue(null, "amount");
         return Integer.parseInt(value);
     }
 
-    public HashMap<String, Profession> parseProfessions(XmlPullParser parser, HashMap<String, Profession> professions)
+    HashMap<String, Profession> parseProfessions(XmlPullParser parser, HashMap<String, Profession> professions)
             throws XmlPullParserException, IOException {
         AbilityType[] abilityOrder = null;
 
@@ -66,7 +66,7 @@ public class AdventurersFileParser implements FileParser {
         }
     }
 
-    public ArrayList<InventoryItem> parseItems(XmlPullParser parser, HashMap<String, Profession> professions)
+    ArrayList<InventoryItem> parseItems(XmlPullParser parser, HashMap<String, Profession> professions)
             throws IOException, XmlPullParserException
     {
         ArrayList<InventoryItem> items = new ArrayList<>();
@@ -85,7 +85,7 @@ public class AdventurersFileParser implements FileParser {
         }
     }
 
-    private ArrayList<Adventurer> parsePrebuildAdventurers(
+    ArrayList<Adventurer> parsePrebuildAdventurers(
             XmlPullParser parser, HashMap<String, Profession> professions,
             Integer initialStamina, Integer initialRank, Integer initialGold
     )

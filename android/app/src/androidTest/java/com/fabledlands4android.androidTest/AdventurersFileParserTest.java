@@ -1,4 +1,4 @@
-package com.fabledlands4android.test;
+package com.fabledlands4android.androidTest;
 
 import com.fabledlands4android.AdventurersFile;
 import com.fabledlands4android.parsers.AdventurersFileParser;

@@ -1,6 +1,7 @@
 package com.fabledlands4android;
 
 import com.fabledlands4android.parsers.AdventurersFileParser;
+import com.fabledlands4android.parsers.BookPageParser;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -26,5 +27,19 @@ public class Book {
                 filename,
                 new AdventurersFileParser()
         );
+    }
+
+    public BookPage getStoryPage(Integer pageId) throws IOException, XmlPullParserException {
+        String filename = this.formatter.format(
+                "book%s/%s.xml",
+                this.bookId,
+                pageId
+        ).toString();
+
+        return this.xmlFileService.get(
+                filename,
+                new BookPageParser(bookId, pageId)
+        );
+
     }
 }

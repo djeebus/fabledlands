@@ -30,7 +30,7 @@ public class AdventurersFileParser implements FileParser {
                             String[] parts = headers.split(" ");
                             abilityOrder = new AbilityType[parts.length];
                             for (int x = 0; x < parts.length; x++) {
-                                abilityOrder[x] = AbilityType.valueOf(parts[x]);
+                                abilityOrder[x] = AbilityType.valueOf(parts[x].toUpperCase());
                             }
                             break;
 
@@ -90,7 +90,6 @@ public class AdventurersFileParser implements FileParser {
                 case XmlPullParser.END_TAG:
                     if (parser.getName().equals("items"))
                         return;
-                    Log.d("TESTING", "tag: " + parser.getName());
                     break;
             }
         }
@@ -144,7 +143,6 @@ public class AdventurersFileParser implements FileParser {
         int initialStamina = 0,
             initialRank = 0,
             initialGold = 0;
-        ArrayList<InventoryItem> items = new ArrayList<>();
 
         int eventType;
         while ((eventType = parser.getEventType()) != XmlPullParser.END_DOCUMENT) {
@@ -189,7 +187,6 @@ public class AdventurersFileParser implements FileParser {
                 initialStamina,
                 initialRank,
                 initialGold,
-                items,
                 prebuiltAdventurers
         );
     }

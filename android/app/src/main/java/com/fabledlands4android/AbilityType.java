@@ -1,10 +1,10 @@
 package com.fabledlands4android;
 
 public enum AbilityType {
-    Charisma,
-    Combat,
-    Magic,
-    Sanctity,
-    Scouting,
-    Thievery,
+    CHARISMA,
+    COMBAT,
+    MAGIC,
+    SANCTITY,
+    SCOUTING,
+    THIEVERY,
 }

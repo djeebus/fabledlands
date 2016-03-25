@@ -16,6 +16,7 @@ import com.fabledlands4android.items.ArmourItem;
 import com.fabledlands4android.items.GenericItem;
 import com.fabledlands4android.items.InventoryItem;
 import com.fabledlands4android.items.WeaponItem;
+import com.facebook.soloader.SoLoader;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,8 @@ public class AdventurersFileParserTest extends InstrumentationTestCase {
 
         Context appContext = instrumentation.getTargetContext();
         assertNotNull(appContext);
+
+        SoLoader.init(appContext, false);
 
         AssetManager assets = appContext.getAssets();
         assertNotNull(assets);
@@ -64,12 +67,12 @@ public class AdventurersFileParserTest extends InstrumentationTestCase {
         Profession priest = this.adventurersInfo.getProfession("Priest");
 
         assertEquals("Priest", priest.getName());
-        assertEquals((Integer)4, priest.getStat(AbilityType.Charisma));
-        assertEquals((Integer)2, priest.getStat(AbilityType.Combat));
-        assertEquals((Integer)3, priest.getStat(AbilityType.Magic));
-        assertEquals((Integer)6, priest.getStat(AbilityType.Sanctity));
-        assertEquals((Integer)4, priest.getStat(AbilityType.Scouting));
-        assertEquals((Integer)2, priest.getStat(AbilityType.Thievery));
+        assertEquals((Integer)4, priest.getStat(AbilityType.CHARISMA));
+        assertEquals((Integer)2, priest.getStat(AbilityType.COMBAT));
+        assertEquals((Integer)3, priest.getStat(AbilityType.MAGIC));
+        assertEquals((Integer)6, priest.getStat(AbilityType.SANCTITY));
+        assertEquals((Integer)4, priest.getStat(AbilityType.SCOUTING));
+        assertEquals((Integer)2, priest.getStat(AbilityType.THIEVERY));
 
         ArrayList<InventoryItem> initialItems = priest.getInitialItems();
         assertEquals(3, initialItems.size());
@@ -88,12 +91,12 @@ public class AdventurersFileParserTest extends InstrumentationTestCase {
         Profession wayfarer = this.adventurersInfo.getProfession("Wayfarer");
 
         assertEquals("Wayfarer", wayfarer.getName());
-        assertEquals((Integer)2, wayfarer.getStat(AbilityType.Charisma));
-        assertEquals((Integer)5, wayfarer.getStat(AbilityType.Combat));
-        assertEquals((Integer)2, wayfarer.getStat(AbilityType.Magic));
-        assertEquals((Integer)3, wayfarer.getStat(AbilityType.Sanctity));
-        assertEquals((Integer)6, wayfarer.getStat(AbilityType.Scouting));
-        assertEquals((Integer)4, wayfarer.getStat(AbilityType.Thievery));
+        assertEquals((Integer)2, wayfarer.getStat(AbilityType.CHARISMA));
+        assertEquals((Integer)5, wayfarer.getStat(AbilityType.COMBAT));
+        assertEquals((Integer)2, wayfarer.getStat(AbilityType.MAGIC));
+        assertEquals((Integer)3, wayfarer.getStat(AbilityType.SANCTITY));
+        assertEquals((Integer)6, wayfarer.getStat(AbilityType.SCOUTING));
+        assertEquals((Integer)4, wayfarer.getStat(AbilityType.THIEVERY));
 
         ArrayList<InventoryItem> initialItems = wayfarer.getInitialItems();
         assertEquals(3, initialItems.size());
@@ -115,5 +118,9 @@ public class AdventurersFileParserTest extends InstrumentationTestCase {
         assertEquals("Ignatius the Devout", ignatius.getName());
         assertEquals(true, ignatius.isMale());
         assertEquals("Priest", ignatius.getProfession().getName());
+    }
+
+    public void testToWritable() {
+        assertNotNull(this.adventurersInfo.toWritable());
     }
 }

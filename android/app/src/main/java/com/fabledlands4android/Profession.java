@@ -1,6 +1,9 @@
 package com.fabledlands4android;
 
 import com.fabledlands4android.items.InventoryItem;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,5 +33,19 @@ public class Profession {
     }
     public void addInitialItem(InventoryItem item) {
         this.initialItems.add(item);
+    }
+
+    public WritableNativeMap toWritable() {
+        WritableNativeMap m = new WritableNativeMap();
+        m.putString("name", this.getName());
+        for (AbilityType abilityType : this.stats.keySet()) {
+            m.putInt(abilityType.toString(), this.stats.get(abilityType));
+        }
+
+        WritableNativeArray i = new WritableNativeArray();
+        for (InventoryItem item : this.initialItems) {
+            i.pushMap(item.toWritable());
+        }
+        return m;
     }
 }

@@ -24,7 +24,11 @@ export class CharacterCreationScreen extends Component {
     getCharacterCreationInfo(1)
       .then(info => {
         this.setState({
-          info: info
+          gold: info.initialGold,
+          rank: info.initialRank,
+          characterDataSource: this.createDataSource(
+            info.prebuildCharacters
+          )
         });
       });
   }
@@ -52,7 +56,10 @@ export class CharacterCreationScreen extends Component {
         <Text style={styles.header}>
           Create a character
         </Text>
-        <Text>Initial gold: {this.initialGold}</Text>
+        <Text>Starting gold: {this.state.initialGold}</Text>
+
+        <ListView dataSource={this.state.characterDataSource}
+                  renderRow={this.renderCharacter.bind()} />
         <Text onPress={this.goToHomeScreen.bind(this)}>
           Back
         </Text>

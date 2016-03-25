@@ -123,11 +123,12 @@ android {
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile "com.facebook.react:react-native:+"
 
     testCompile 'junit:junit:4.12'
     testCompile 'com.android.support.test:runner:0.4.1'
 
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile "com.facebook.react:react-native:+"
 }

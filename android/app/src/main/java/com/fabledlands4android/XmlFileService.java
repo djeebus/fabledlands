@@ -29,11 +29,9 @@ public class XmlFileService {
             FileParser fileParser
     ) throws XmlPullParserException, IOException {
         if (this._cache.containsKey(filename)) {
-            Log.i(TAG, "returning cached version of " + filename);
             return (T)this._cache.get(filename);
         }
 
-        Log.i(TAG, "Reading " + filename);
         InputStream inputStream = null;
         try {
             inputStream = this.assets.open(filename);
@@ -42,13 +40,10 @@ public class XmlFileService {
             return null;
         }
 
-        Log.i(TAG, "Parsing " + filename);
         XmlPullParser parser = this.factory.newPullParser();
         parser.setInput(inputStream, null);
 
-        Log.i(TAG, "Deserializing " + filename);
         Object result = fileParser.parse(parser);
-        Log.i(TAG, "Successfully deserialized " + filename);
         return (T)result;
     }
 }

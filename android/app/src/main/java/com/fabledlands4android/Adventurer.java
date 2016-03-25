@@ -1,5 +1,8 @@
 package com.fabledlands4android;
 
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
+
 import java.util.HashMap;
 
 public class Adventurer {
@@ -62,5 +65,12 @@ public class Adventurer {
 
     public Profession getProfession() {
         return this.profession;
+    }
+
+    public WritableMap toWritable() {
+        WritableNativeMap a = new WritableNativeMap();
+        a.putString("name", this.getName());
+        a.putMap("profession", this.getProfession().toWritable());
+        return a;
     }
 }
